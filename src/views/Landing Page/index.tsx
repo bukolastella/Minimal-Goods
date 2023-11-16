@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Discover from "./components/Discover";
 import Hero from "./components/Hero";
 import NavHeader from "./components/NavHeader";
+import Display from "./components/Display";
 
 const LandingPage = () => {
   return (
@@ -9,6 +10,7 @@ const LandingPage = () => {
       <Hero />
       <NavHeader />
       <Discover />
+      <Display />
       <W />
     </>
   );

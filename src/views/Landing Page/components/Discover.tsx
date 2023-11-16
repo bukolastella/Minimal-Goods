@@ -28,7 +28,7 @@ const Discover = () => {
         pin: true,
         pinSpacing: false,
         scrub: 1,
-        markers: true,
+        // markers: true,
         animation: tl,
       });
     }, app);
