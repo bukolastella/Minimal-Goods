@@ -4,6 +4,7 @@ import Hero from "./components/Hero";
 import NavHeader from "./components/NavHeader";
 import Display from "./components/Display";
 import PillSection from "./components/PillSection";
+import Shop from "./components/Shop";
 
 const LandingPage = () => {
   return (
@@ -13,6 +14,7 @@ const LandingPage = () => {
       <Discover />
       <Display />
       <PillSection />
+      <Shop />
       <W />
     </>
   );

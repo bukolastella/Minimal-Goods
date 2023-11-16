@@ -15,6 +15,12 @@ export const GlobalStyle = createGlobalStyle`
     width: 100%;
     font-family: 'Roboto', sans-serif;
     scroll-behavior: smooth;
+    
+  }
+
+  body{
+    background: ${({ theme }) => theme.body};
+    color: ${({ theme }) => theme.text};
   }
 
   a {
