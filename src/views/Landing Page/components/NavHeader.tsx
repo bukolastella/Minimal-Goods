@@ -1,20 +1,18 @@
 import styled from "styled-components";
 import Colors from "../../../styles/Colors";
 import Logo from "./Logo";
-import { FC, useLayoutEffect, useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+gsap.registerPlugin(ScrollTrigger);
 
-interface Props {
-  tl: GSAPTimeline;
-}
-
-const NavHeader: FC<Props> = ({ tl }) => {
+const NavHeader = () => {
   const app = useRef<HTMLDivElement>(null);
   const ctx = useRef<gsap.Context>();
 
   useLayoutEffect(() => {
     ctx.current = gsap.context(() => {
-      // gsap.timeline({ paused: false })
+      const tl = gsap.timeline({ paused: false });
 
       tl.fromTo(
         ".middle",
@@ -25,17 +23,26 @@ const NavHeader: FC<Props> = ({ tl }) => {
         {
           width: "12%",
           translate: "0 0%",
-          ease: "power3.out",
+          ease: "linear",
         }
       );
+
+      ScrollTrigger.create({
+        trigger: ".scroll-wrapper",
+        start: "top bottom",
+        end: () => `+=${window.innerHeight}`,
+        scrub: 1,
+        // markers: true,
+        animation: tl,
+      });
     }, app);
 
     return () => ctx.current?.revert();
-  }, [tl]);
+  }, []);
 
   return (
     <Wrapper ref={app}>
-      <MiniWrapper>
+      <MiniWrapper className="scroll-wrapper">
         <Nav>
           <LeftSide>
             <div>ARTICLES</div>
