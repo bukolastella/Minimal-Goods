@@ -3,6 +3,7 @@ import Discover from "./components/Discover";
 import Hero from "./components/Hero";
 import NavHeader from "./components/NavHeader";
 import Display from "./components/Display";
+import PillSection from "./components/PillSection";
 
 const LandingPage = () => {
   return (
@@ -11,6 +12,7 @@ const LandingPage = () => {
       <NavHeader />
       <Discover />
       <Display />
+      <PillSection />
       <W />
     </>
   );
