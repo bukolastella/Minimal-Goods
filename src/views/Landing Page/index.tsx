@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import Discover from "./components/Discover";
 import Hero from "./components/Hero";
 import NavHeader from "./components/NavHeader";
@@ -17,15 +16,14 @@ const LandingPage = () => {
       <Discover />
       <Display NavApp={NavApp} />
       <PillSection />
-      <Shop />
-      <W />
+      <Shop NavApp={NavApp} />
     </>
   );
 };
 
 export default LandingPage;
 
-const W = styled.div`
-  height: 100vh;
-  background-color: red;
-`;
+// const W = styled.div`
+//   height: 100vh;
+//   background-color: red;
+// `;

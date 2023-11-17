@@ -1,11 +1,18 @@
 import styled from "styled-components";
-import BG1 from "../../../assets/bg1.jpeg";
-import { useLayoutEffect, useRef, useState } from "react";
+import BG3 from "../../../assets/bg3.jpeg";
+import BG4 from "../../../assets/bg4.jpeg";
+import BG5 from "../../../assets/bg5.jpeg";
+import BG6 from "../../../assets/bg6.jpeg";
+import { FC, useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
-const Shop = () => {
+interface Props {
+  NavApp: React.RefObject<HTMLDivElement>;
+}
+
+const Shop: FC<Props> = ({ NavApp }) => {
   const app = useRef<HTMLDivElement>(null);
   const ctx = useRef<gsap.Context>();
   const [active, setActive] = useState(1);
@@ -14,19 +21,58 @@ const Shop = () => {
     ctx.current = gsap.context((self) => {
       if (!self.selector) return;
       const grids = self.selector(".scroll-grid") as HTMLDivElement[];
+      const imgs = self.selector(".img-grid ") as HTMLDivElement[];
 
-      grids.forEach((element, index) => {
+      imgs.forEach((element, index) => {
         const random = gsap.utils.random(["-10%", "-30%", "-50%"], true);
+
+        const tl = gsap.timeline().to(element.children, {
+          y: () => {
+            const temp = random();
+            return temp;
+          },
+        });
 
         ScrollTrigger.create({
           trigger: element,
           start: "top bottom",
           end: "bottom bottom",
-          markers: true,
+          // markers: true,
           scrub: 1,
-          animation: gsap.to(element.children[0].children, {
-            y: random(),
-          }),
+          animation: tl,
+          onEnter: () => setActive(index + 1),
+          onEnterBack: () => setActive(index + 1),
+        });
+      });
+
+      grids.forEach((element, index) => {
+        const setMode = (params: HTMLDivElement | null) => {
+          return gsap.to(params, {
+            background: (index + 1) % 2 ? "#2e2a27" : "#e8e2da",
+            color: (index + 1) % 2 ? "#e8e2da" : "#2e2a27",
+            duration: 1.5,
+          });
+        };
+
+        const tl = gsap
+          .timeline()
+          .to(
+            NavApp?.current,
+            {
+              duration: 4,
+            },
+            "<"
+          )
+          .add(setMode(NavApp?.current))
+          .add(setMode(app?.current), "<");
+
+        ScrollTrigger.create({
+          trigger: element,
+          start: "top bottom",
+          end: "bottom bottom",
+          // markers: true,
+          scrub: 1,
+          animation: tl,
           onEnter: () => setActive(index + 1),
           onEnterBack: () => setActive(index + 1),
         });
@@ -34,7 +80,7 @@ const Shop = () => {
     }, app);
 
     return () => ctx.current?.revert();
-  }, []);
+  }, [NavApp]);
 
   const labelData = ["Furniture", "Decor", "Office", "Tech"];
 
@@ -46,37 +92,37 @@ const Shop = () => {
 
       <ScrollWrapper className="scroll-grid">
         <ImgGrid className="img-grid">
-          <img src={BG1} alt="" />
-          <img src={BG1} alt="" />
-          <img src={BG1} alt="" />
-          <img src={BG1} alt="" />
+          <img src={BG3} alt="" />
+          <img src={BG3} alt="" />
+          <img src={BG3} alt="" />
+          <img src={BG3} alt="" />
         </ImgGrid>
       </ScrollWrapper>
 
       <ScrollWrapper className="scroll-grid">
         <ImgGrid className="img-grid">
-          <img src={BG1} alt="" />
-          <img src={BG1} alt="" />
-          <img src={BG1} alt="" />
-          <img src={BG1} alt="" />
+          <img src={BG4} alt="" />
+          <img src={BG4} alt="" />
+          <img src={BG4} alt="" />
+          <img src={BG4} alt="" />
         </ImgGrid>
       </ScrollWrapper>
 
       <ScrollWrapper className="scroll-grid">
         <ImgGrid className="img-grid">
-          <img src={BG1} alt="" />
-          <img src={BG1} alt="" />
-          <img src={BG1} alt="" />
-          <img src={BG1} alt="" />
+          <img src={BG5} alt="" />
+          <img src={BG5} alt="" />
+          <img src={BG5} alt="" />
+          <img src={BG5} alt="" />
         </ImgGrid>
       </ScrollWrapper>
 
       <ScrollWrapper className="scroll-grid">
         <ImgGrid className="img-grid">
-          <img src={BG1} alt="" />
-          <img src={BG1} alt="" />
-          <img src={BG1} alt="" />
-          <img src={BG1} alt="" />
+          <img src={BG6} alt="" />
+          <img src={BG6} alt="" />
+          <img src={BG6} alt="" />
+          <img src={BG6} alt="" />
         </ImgGrid>
       </ScrollWrapper>
     </Wrapper>
@@ -95,14 +141,12 @@ const Wrapper = styled.div`
 
 const ScrollWrapper = styled.div`
   width: 100%;
-  /* height: 100%; */
 `;
 
 const ImgGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(4, max-content);
   justify-content: space-between;
-  /* background-color: red; */
 
   & > img {
     z-index: 5;
