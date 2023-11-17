@@ -1,22 +1,44 @@
 import styled from "styled-components";
-import Colors from "../../../styles/Colors";
 import BG2 from "../../../assets/bg2.jpeg";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useLayoutEffect, useRef } from "react";
+import { FC, useLayoutEffect, useRef } from "react";
+import { modeStore } from "../../../store/mode";
 gsap.registerPlugin(ScrollTrigger);
 
-const Display = () => {
+interface Props {
+  NavApp: React.RefObject<HTMLDivElement>;
+}
+
+const Display: FC<Props> = ({ NavApp }) => {
   const app = useRef<HTMLDivElement>(null);
   const ctx = useRef<gsap.Context>();
 
   useLayoutEffect(() => {
     ctx.current = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { duration: 10 } }).to(".image", {
-        borderRadius: 0,
-        width: "100%",
-        height: "100%",
-      });
+      const tl = gsap
+        .timeline({ defaults: { duration: 10 } })
+        .to(NavApp?.current, {
+          background: "#e8e2da",
+          color: "#2e2a27",
+        })
+        .to(
+          app.current,
+          {
+            background: "#e8e2da",
+            color: "#2e2a27",
+          },
+          "<"
+        )
+        .to(
+          ".image",
+          {
+            borderRadius: 0,
+            width: "100%",
+            height: "100%",
+          },
+          "<"
+        );
 
       ScrollTrigger.create({
         trigger: ".scroll-wrapper",
@@ -26,11 +48,13 @@ const Display = () => {
         scrub: 1,
         // markers: true,
         animation: tl,
+        onLeave: () => (modeStore.isDark = false),
+        onEnterBack: () => (modeStore.isDark = true),
       });
     }, app);
 
     return () => ctx.current?.revert();
-  }, []);
+  }, [NavApp]);
 
   return (
     <Wrapper ref={app}>
@@ -49,7 +73,7 @@ export default Display;
 
 const Wrapper = styled.div`
   min-height: 100vh;
-  background-color: ${Colors.Black2e};
+  background-color: ${({ theme }) => theme.body};
   padding: 0 30px;
 `;
 

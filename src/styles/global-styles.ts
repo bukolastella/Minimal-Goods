@@ -19,8 +19,12 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   body{
-    background: ${({ theme }) => theme.body};
+    /* background-color: ${({ theme }) => theme.body};
     color: ${({ theme }) => theme.text};
+    --primary-color: red;
+      --bg-color: blue;
+  --btn-font-size: 18px; */
+    /* transition: background 2s, color 2s; */
   }
 
   a {

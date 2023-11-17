@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import Colors from "../../../styles/Colors";
 
 const PillSection = () => {
   return (
@@ -30,14 +29,15 @@ const Wrapper = styled.div`
   justify-content: center;
   flex-wrap: wrap;
   gap: 16px;
-  background-color: ${Colors.Black2e};
+  background: ${({ theme }) => theme.body};
 `;
 
 const Pill = styled.div`
-  color: ${Colors.CreamE8};
+  color: ${({ theme }) => theme.text};
   width: max-content;
   padding: 6px 16px;
-  border: 1px solid ${Colors.CreamE8};
+  border: 1px solid;
+  border-color: ${({ theme }) => theme.text};
   border-radius: 50px;
   font-size: 2.8125rem;
   display: flex;

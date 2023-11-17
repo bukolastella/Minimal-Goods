@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import Colors from "../../../styles/Colors";
 import BG1 from "../../../assets/bg1.jpeg";
 
 const Shop = () => {
@@ -16,8 +15,8 @@ export default Shop;
 
 const Wrapper = styled.div`
   min-height: 100vh;
-  background-color: ${Colors.Black2e};
-  color: ${Colors.CreamE8};
+  background: ${({ theme }) => theme.body};
+  color: ${({ theme }) => theme.text};
   padding: 126px 30px;
 `;
 

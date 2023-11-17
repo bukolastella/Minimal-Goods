@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import Colors from "../../../styles/Colors";
 import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -54,8 +53,8 @@ export default Discover;
 
 const Wrapper = styled.div`
   min-height: 100vh;
-  background-color: ${Colors.Black2e};
-  color: ${Colors.CreamE8};
+  background: ${({ theme }) => theme.body};
+  color: ${({ theme }) => theme.text};
   padding: 126px 30px;
 `;
 
@@ -72,7 +71,7 @@ const Text = styled.div`
   line-height: 8.75rem;
   text-align: center;
   overflow: hidden;
-  background-color: ${Colors.Black2e};
+  background: ${({ theme }) => theme.body};
 `;
 
 const Spec = styled(Text)`

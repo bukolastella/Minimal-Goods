@@ -5,14 +5,17 @@ import NavHeader from "./components/NavHeader";
 import Display from "./components/Display";
 import PillSection from "./components/PillSection";
 import Shop from "./components/Shop";
+import { useRef } from "react";
 
 const LandingPage = () => {
+  const NavApp = useRef<HTMLDivElement>(null);
+
   return (
     <>
       <Hero />
-      <NavHeader />
+      <NavHeader NavApp={NavApp} />
       <Discover />
-      <Display />
+      <Display NavApp={NavApp} />
       <PillSection />
       <Shop />
       <W />

@@ -1,13 +1,15 @@
 import styled from "styled-components";
-import Colors from "../../../styles/Colors";
 import Logo from "./Logo";
-import { useLayoutEffect, useRef } from "react";
+import { FC, useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
-const NavHeader = () => {
-  const app = useRef<HTMLDivElement>(null);
+interface Props {
+  NavApp: React.RefObject<HTMLDivElement>;
+}
+
+const NavHeader: FC<Props> = ({ NavApp }) => {
   const ctx = useRef<gsap.Context>();
 
   useLayoutEffect(() => {
@@ -35,13 +37,13 @@ const NavHeader = () => {
         // markers: true,
         animation: tl,
       });
-    }, app);
+    }, NavApp);
 
     return () => ctx.current?.revert();
-  }, []);
+  }, [NavApp]);
 
   return (
-    <Wrapper ref={app}>
+    <Wrapper ref={NavApp}>
       <MiniWrapper className="scroll-wrapper">
         <Nav>
           <LeftSide>
@@ -64,7 +66,8 @@ export default NavHeader;
 const Wrapper = styled.div`
   width: 100%;
   height: 85.4px;
-  background-color: ${Colors.Black2e};
+  background: ${({ theme }) => theme.body};
+  color: ${({ theme }) => theme.text};
   padding: 0 30px;
   position: sticky;
   left: 0;
@@ -84,8 +87,8 @@ const Nav = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: ${Colors.CreamE8};
-  border-bottom: 1px solid ${Colors.CreamE8};
+  border-bottom: 1px solid;
+  border-color: ${({ theme }) => theme.text};
   position: absolute;
   left: 0;
 `;
@@ -101,14 +104,6 @@ const MiddleSide = styled.div`
   left: 0;
   right: 0;
   margin: auto;
-  /* width: 100%;
-  transform: translate(0px, -90%); */
-  /* width: 12.2476%;
-  transform: translate(0px, 0%); */
-
-  svg {
-    color: ${Colors.CreamE8};
-  }
 `;
 
 const RightSide = styled.div`
